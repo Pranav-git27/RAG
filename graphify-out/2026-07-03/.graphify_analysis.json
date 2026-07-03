@@ -1,0 +1,368 @@
+{
+  "communities": {
+    "0": [
+      "backend_config",
+      "backend_config_get_settings",
+      "backend_config_rationale_1",
+      "backend_config_rationale_24",
+      "backend_config_rationale_51",
+      "backend_config_settings",
+      "backend_db_session",
+      "backend_db_session_rationale_1",
+      "backend_deps",
+      "backend_deps_get_db",
+      "backend_deps_rationale_1",
+      "backend_deps_rationale_41",
+      "backend_main",
+      "backend_main_lifespan",
+      "backend_main_rationale_1",
+      "backend_main_rationale_34",
+      "backend_routes_conversations",
+      "backend_routes_conversations_rationale_1",
+      "backend_routes_health",
+      "backend_routes_health_rationale_1",
+      "backend_services_embeddings",
+      "backend_services_embeddings_rationale_1",
+      "backend_services_generation",
+      "backend_services_generation_rationale_1",
+      "basesettings",
+      "fastapi",
+      "scripts_ingest",
+      "scripts_ingest_rationale_1"
+    ],
+    "1": [
+      "backend_models_db_auditlog",
+      "backend_models_db_rationale_93",
+      "backend_models_schemas",
+      "backend_models_schemas_conversationcreate",
+      "backend_models_schemas_conversationdetail",
+      "backend_models_schemas_conversationresponse",
+      "backend_models_schemas_healthresponse",
+      "backend_models_schemas_messagecreate",
+      "backend_models_schemas_queryrequest",
+      "backend_models_schemas_rationale_1",
+      "backend_models_schemas_rationale_21",
+      "backend_models_schemas_rationale_38",
+      "backend_models_schemas_rationale_44",
+      "backend_models_schemas_rationale_56",
+      "backend_models_schemas_rationale_67",
+      "backend_models_schemas_rationale_76",
+      "backend_models_schemas_rationale_83",
+      "backend_models_schemas_rationale_92",
+      "backend_models_schemas_searchresponse",
+      "backend_models_schemas_sourceitem",
+      "backend_routes_search",
+      "backend_routes_search_py_session",
+      "backend_routes_search_rationale_1",
+      "backend_routes_search_rationale_38",
+      "backend_routes_search_rationale_96",
+      "backend_routes_search_search",
+      "backend_routes_search_write_audit",
+      "basemodel"
+    ],
+    "2": [
+      "backend_db_session_base",
+      "backend_db_session_rationale_38",
+      "backend_models_db",
+      "backend_models_db_conversation",
+      "backend_models_db_message",
+      "backend_models_db_rationale_1",
+      "backend_models_db_rationale_46",
+      "backend_models_db_rationale_70",
+      "backend_repositories_conversation_repo",
+      "backend_repositories_conversation_repo_conversationrepository",
+      "backend_repositories_conversation_repo_conversationrepository_add_message",
+      "backend_repositories_conversation_repo_conversationrepository_create_conversation",
+      "backend_repositories_conversation_repo_conversationrepository_get_conversation",
+      "backend_repositories_conversation_repo_conversationrepository_get_messages",
+      "backend_repositories_conversation_repo_conversationrepository_init",
+      "backend_repositories_conversation_repo_conversationrepository_list_conversations",
+      "backend_repositories_conversation_repo_py_any",
+      "backend_repositories_conversation_repo_py_session",
+      "backend_repositories_conversation_repo_rationale_1",
+      "backend_repositories_conversation_repo_rationale_22",
+      "backend_repositories_conversation_repo_rationale_29",
+      "backend_repositories_conversation_repo_rationale_37",
+      "backend_repositories_conversation_repo_rationale_47",
+      "backend_repositories_conversation_repo_rationale_64",
+      "backend_repositories_conversation_repo_rationale_89",
+      "declarativebase",
+      "uuid"
+    ],
+    "3": [
+      "backend_models_db_document",
+      "backend_models_db_rationale_22",
+      "backend_repositories_document_repo",
+      "backend_repositories_document_repo_documentrepository",
+      "backend_repositories_document_repo_documentrepository_add_document",
+      "backend_repositories_document_repo_documentrepository_add_documents_bulk",
+      "backend_repositories_document_repo_documentrepository_count",
+      "backend_repositories_document_repo_documentrepository_init",
+      "backend_repositories_document_repo_documentrepository_search_similar",
+      "backend_repositories_document_repo_py_any",
+      "backend_repositories_document_repo_py_session",
+      "backend_repositories_document_repo_rationale_1",
+      "backend_repositories_document_repo_rationale_26",
+      "backend_repositories_document_repo_rationale_43",
+      "backend_repositories_document_repo_rationale_61",
+      "backend_repositories_document_repo_rationale_81",
+      "backend_repositories_document_repo_rationale_90",
+      "backend_services_retrieval",
+      "backend_services_retrieval_py_any",
+      "backend_services_retrieval_py_session",
+      "backend_services_retrieval_rationale_1",
+      "backend_services_retrieval_rationale_22",
+      "backend_services_retrieval_rationale_34",
+      "backend_services_retrieval_retrievalservice",
+      "backend_services_retrieval_retrievalservice_init",
+      "backend_services_retrieval_retrievalservice_retrieve"
+    ],
+    "4": [
+      "frontend_api_client",
+      "frontend_api_client_backendclient",
+      "frontend_api_client_backendclient_create_conversation",
+      "frontend_api_client_backendclient_get_conversation",
+      "frontend_api_client_backendclient_health",
+      "frontend_api_client_backendclient_init",
+      "frontend_api_client_backendclient_is_healthy",
+      "frontend_api_client_backendclient_list_conversations",
+      "frontend_api_client_backendclient_search",
+      "frontend_api_client_py_any",
+      "frontend_api_client_rationale_1",
+      "frontend_api_client_rationale_20",
+      "frontend_api_client_rationale_28",
+      "frontend_api_client_rationale_34",
+      "frontend_api_client_rationale_43",
+      "frontend_api_client_rationale_58",
+      "frontend_api_client_rationale_68",
+      "frontend_api_client_rationale_78"
+    ],
+    "5": [
+      "frontend_app",
+      "frontend_app_rationale_1",
+      "frontend_components",
+      "frontend_components_py_any",
+      "frontend_components_rationale_1",
+      "frontend_components_rationale_19",
+      "frontend_components_rationale_47",
+      "frontend_components_rationale_73",
+      "frontend_components_render_answer",
+      "frontend_components_render_empty_state",
+      "frontend_components_render_status_indicator",
+      "frontend_styles",
+      "frontend_styles_inject_theme",
+      "frontend_styles_rationale_1",
+      "frontend_styles_rationale_129",
+      "frontend_styles_rationale_22"
+    ],
+    "6": [
+      "backend_deps_get_conversation_repo",
+      "backend_deps_get_document_repo",
+      "backend_deps_get_retrieval_service",
+      "backend_deps_py_session",
+      "backend_deps_rationale_60",
+      "backend_deps_rationale_65",
+      "backend_deps_rationale_73",
+      "backend_routes_conversations_create_conversation",
+      "backend_routes_conversations_get_conversation",
+      "backend_routes_conversations_list_conversations",
+      "backend_routes_conversations_py_session",
+      "backend_routes_conversations_rationale_34",
+      "backend_routes_conversations_rationale_53",
+      "backend_routes_conversations_rationale_69"
+    ],
+    "7": [
+      "backend_deps_get_embedding_service",
+      "backend_deps_rationale_50",
+      "backend_services_embeddings_embeddingservice",
+      "backend_services_embeddings_embeddingservice_embed_documents",
+      "backend_services_embeddings_embeddingservice_embed_query",
+      "backend_services_embeddings_embeddingservice_init",
+      "backend_services_embeddings_py_client",
+      "backend_services_embeddings_rationale_24",
+      "backend_services_embeddings_rationale_32",
+      "backend_services_embeddings_rationale_53",
+      "scripts_ingest_rationale_91",
+      "scripts_ingest_seed"
+    ],
+    "8": [
+      "backend_deps_get_generation_service",
+      "backend_deps_rationale_55",
+      "backend_services_generation_build_context_block",
+      "backend_services_generation_generationservice",
+      "backend_services_generation_generationservice_init",
+      "backend_services_generation_generationservice_synthesize",
+      "backend_services_generation_py_any",
+      "backend_services_generation_py_client",
+      "backend_services_generation_rationale_45",
+      "backend_services_generation_rationale_66",
+      "backend_services_generation_rationale_77"
+    ],
+    "9": [
+      "backend_db_session_get_session",
+      "backend_db_session_py_session",
+      "backend_db_session_rationale_42"
+    ],
+    "10": [
+      "backend_routes_health_health_check",
+      "backend_routes_health_py_session",
+      "backend_routes_health_rationale_26"
+    ],
+    "11": [
+      "backend_db_init",
+      "backend_db_init_rationale_1"
+    ],
+    "12": [
+      "backend_init",
+      "backend_init_rationale_1"
+    ],
+    "13": [
+      "backend_models_init",
+      "backend_models_init_rationale_1"
+    ],
+    "14": [
+      "backend_repositories_init",
+      "backend_repositories_init_rationale_1"
+    ],
+    "15": [
+      "backend_routes_init",
+      "backend_routes_init_rationale_1"
+    ],
+    "16": [
+      "backend_services_init",
+      "backend_services_init_rationale_1"
+    ]
+  },
+  "cohesion": {
+    "0": 0.12698412698412698,
+    "1": 0.11375661375661375,
+    "2": 0.1225071225071225,
+    "3": 0.10153846153846154,
+    "4": 0.13725490196078433,
+    "5": 0.16666666666666666,
+    "6": 0.16483516483516483,
+    "7": 0.18181818181818182,
+    "8": 0.2,
+    "9": 0.6666666666666666,
+    "10": 0.6666666666666666,
+    "11": 1.0,
+    "12": 1.0,
+    "13": 1.0,
+    "14": 1.0,
+    "15": 1.0,
+    "16": 1.0
+  },
+  "gods": [
+    {
+      "id": "backend_repositories_document_repo_documentrepository",
+      "label": "DocumentRepository",
+      "degree": 15
+    },
+    {
+      "id": "backend_services_embeddings_embeddingservice",
+      "label": "EmbeddingService",
+      "degree": 13
+    },
+    {
+      "id": "backend_repositories_conversation_repo_conversationrepository",
+      "label": "ConversationRepository",
+      "degree": 12
+    },
+    {
+      "id": "backend_config_get_settings",
+      "label": "get_settings()",
+      "degree": 11
+    },
+    {
+      "id": "frontend_api_client_backendclient",
+      "label": "BackendClient",
+      "degree": 10
+    },
+    {
+      "id": "backend_deps_get_conversation_repo",
+      "label": "get_conversation_repo()",
+      "degree": 9
+    },
+    {
+      "id": "backend_models_db_conversation",
+      "label": "Conversation",
+      "degree": 9
+    },
+    {
+      "id": "backend_db_session_base",
+      "label": "Base",
+      "degree": 8
+    },
+    {
+      "id": "backend_models_db_document",
+      "label": "Document",
+      "degree": 8
+    },
+    {
+      "id": "backend_services_retrieval_retrievalservice",
+      "label": "RetrievalService",
+      "degree": 8
+    }
+  ],
+  "surprises": [
+    {
+      "source": "seed()",
+      "target": "get_settings()",
+      "source_files": [
+        "scripts/ingest.py",
+        "backend/config.py"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; bridges separate communities"
+    },
+    {
+      "source": "seed()",
+      "target": "DocumentRepository",
+      "source_files": [
+        "scripts/ingest.py",
+        "backend/repositories/document_repo.py"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; bridges separate communities"
+    },
+    {
+      "source": "AuditLog",
+      "target": "Base",
+      "source_files": [
+        "backend/models/db.py",
+        "backend/db/session.py"
+      ],
+      "confidence": "INFERRED",
+      "relation": "uses",
+      "why": "inferred connection - not explicitly stated in source; bridges separate communities"
+    },
+    {
+      "source": "Document",
+      "target": "Base",
+      "source_files": [
+        "backend/models/db.py",
+        "backend/db/session.py"
+      ],
+      "confidence": "INFERRED",
+      "relation": "uses",
+      "why": "inferred connection - not explicitly stated in source; bridges separate communities"
+    },
+    {
+      "source": "RetrievalService",
+      "target": "EmbeddingService",
+      "source_files": [
+        "backend/services/retrieval.py",
+        "backend/services/embeddings.py"
+      ],
+      "confidence": "INFERRED",
+      "relation": "uses",
+      "why": "inferred connection - not explicitly stated in source; bridges separate communities"
+    }
+  ],
+  "tokens": {
+    "input": 0,
+    "output": 0
+  }
+}

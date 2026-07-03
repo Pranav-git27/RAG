@@ -1,10 +1,10 @@
 # 🛡️ secOwasp — Secure Semantic Intelligence for OWASP Top 10
 
-secOwasp is a production-grade, context-aware Retrieval-Augmented Generation (RAG) semantic database search application. It utilizes modern AI embeddings to search, analyze, and retrieve security guidance, remediation models, and code examples for OWASP Top 10 vulnerabilities.
+Production-grade, context-aware **Retrieval-Augmented Generation (RAG)** application. Uses Google Gemini embeddings for semantic search and LLM-powered answer synthesis over OWASP vulnerability documentation, backed by Supabase (Postgres + pgvector).
 
 ---
 
-## 🏛️ Architecture & System Design
+## Architecture
 
 ```mermaid
 graph TD
@@ -12,111 +12,162 @@ graph TD
     classDef backend fill:#1E293B,stroke:#3B82F6,stroke-width:2px,color:#F8FAFC;
     classDef database fill:#1E293B,stroke:#EC4899,stroke-width:2px,color:#F8FAFC;
 
-    Streamlit[Streamlit Frontend UI<br/>app.py]:::client
-    FastAPI[FastAPI Backend Server<br/>main.py]:::backend
-    GeminiAPI[Google Gemini Embeddings<br/>gemini-embedding-2]:::backend
-    ChromaDB[(Chroma Vector DB<br/>chroma_data/)]:::database
-    Ingest[Ingest/Seeding Tool<br/>ingest.py]:::database
+    Streamlit[Streamlit Frontend<br>frontend/]:::client
+    FastAPI[FastAPI Backend<br>backend/]:::backend
+    GeminiAPI[Google Gemini<br>embeddings + LLM]:::backend
+    Supabase[(Supabase<br>Postgres + pgvector)]:::database
 
-    Streamlit -->|HTTP POST Request| FastAPI
-    FastAPI -->|Query text| GeminiAPI
-    GeminiAPI -->|Vector Embedding| FastAPI
-    FastAPI -->|Retrieve Top-K Documents| ChromaDB
-    Ingest -->|Embeds & Seeds Data| ChromaDB
+    Streamlit -->|HTTP| FastAPI
+    FastAPI -->|Embed query| GeminiAPI
+    GeminiAPI -->|768-dim vector| FastAPI
+    FastAPI -->|Cosine search <=> | Supabase
+    FastAPI -->|Generate answer| GeminiAPI
+    GeminiAPI -->|Synthesised answer| FastAPI
+    FastAPI -->|Persist conversation| Supabase
+```
+
+### RAG Flow
+```
+User query
+  → Gemini embeds query (768-dim vector)
+  → pgvector cosine similarity search (top-K docs)
+  → Gemini synthesises answer from retrieved context + cites sources
+  → Answer + sources returned to frontend
+  → Conversation persisted to Supabase
 ```
 
 ---
 
-## ✨ Features
+## Features
 
-- **Semantic Search Engine**: Finds relevant OWASP vulnerabilities and mitigations based on conceptual meaning, not just exact keyword matches.
-- **Modern Google GenAI Embedding Integration**: Custom embedding wrapper built on `google-genai` using the high-performance `gemini-embedding-2` model.
-- **FastAPI Core Backend**: Secure, production-safe endpoints with robust lifespan events, structured JSON-friendly log prints, and rigorous Pydantic v2 input guards (mitigating resource exhaustion/DoS).
-- **Streamlit Interactive UI**: Cyber-defensive theme featuring rich animations, custom glassmorphism panels, confidence levels, and active status validation.
+- **True RAG Pipeline** — Not just vector search; actually synthesises natural-language answers from retrieved context, with citation numbers.
+- **Supabase + pgvector** — Production database with HNSW-indexed vector similarity, relational data (conversations, audit logs), all in one hosted Postgres instance.
+- **Gemini Embeddings (768-dim MRL)** — Uses `gemini-embedding-2` with Matryoshka Representation Learning truncation — 1/4 the storage with negligible quality loss.
+- **Gemini Flash Generation** — `gemini-2.0-flash` for fast, low-cost answer synthesis.
+- **No LangChain** — Direct `google-genai` SDK calls. Transparent, lightweight, no abstraction overhead.
+- **Clean Architecture** — Separated layers: config → db → models → repositories → services → routes → frontend.
+- **Persistent Conversations** — Chat history stored in Supabase with source references.
+- **Audit Logging** — Every search query logged with latency and status.
 
 ---
 
-## 📁 Repository Structure
+## Project Structure
 
-```tree
+```
 .
-├── .env                  # Project secrets (API keys)
-├── .env.example          # Sample environment configuration template
-├── .gitignore            # Version control exclusions
-├── app.py                # Streamlit premium chatbot frontend
-├── database.py           # Database helper utility & schema documentation
-├── ingest.py             # Script to initialize/seed vector collections
-├── main.py               # Production FastAPI backend application
-└── requirements.txt      # Python dependencies
+├── backend/                     # FastAPI application
+│   ├── __init__.py
+│   ├── main.py                  # App factory + lifespan
+│   ├── config.py                # Centralised settings (pydantic-settings)
+│   ├── deps.py                  # FastAPI dependency injection
+│   ├── db/
+│   │   ├── __init__.py
+│   │   └── session.py           # SQLAlchemy engine + session factory
+│   ├── models/
+│   │   ├── __init__.py
+│   │   ├── db.py                # ORM models (Document, Conversation, Message, AuditLog)
+│   │   └── schemas.py           # Pydantic request/response schemas
+│   ├── repositories/
+│   │   ├── __init__.py
+│   │   ├── document_repo.py     # pgvector similarity search
+│   │   └── conversation_repo.py # Conversation + message CRUD
+│   ├── services/
+│   │   ├── __init__.py
+│   │   ├── embeddings.py        # Gemini embedding wrapper (768-dim)
+│   │   ├── retrieval.py         # Embed → search orchestrator
+│   │   └── generation.py        # RAG answer synthesis
+│   └── routes/
+│       ├── __init__.py
+│       ├── health.py            # GET /health
+│       ├── search.py            # POST /api/v1/search (RAG endpoint)
+│       └── conversations.py    # GET/POST /api/v1/conversations
+├── frontend/                    # Streamlit UI
+│   ├── app.py                   # Thin entry point (~90 lines)
+│   ├── api_client.py            # Typed backend HTTP client
+│   ├── components.py            # Reusable UI components
+│   └── styles.py                # Theme constants + CSS
+├── scripts/
+│   ├── ingest.py                # Seed OWASP sample data into Supabase
+│   └── init_db.sql              # One-time schema (run in Supabase SQL Editor)
+├── .env                         # Your secrets (not committed)
+├── .env.example                 # Template for .env
+├── .gitignore
+├── requirements.txt
+└── README.md
 ```
 
 ---
 
-## 🚀 Setup Instructions
+## Setup
 
 ### 1. Prerequisites
-- Python 3.10 to 3.12 active environment.
-- A valid Google Gemini API Key. Get one from [Google AI Studio](https://aistudio.google.com/).
+- Python 3.10 – 3.12
+- A [Supabase](https://supabase.com) account (free tier works)
+- A Google Gemini API key from [AI Studio](https://aistudio.google.com/)
 
-### 2. Environment Configuration
-Clone or navigate to the workspace, create your virtual environment and install dependencies:
+### 2. Create Supabase Project
+1. Go to [supabase.com](https://supabase.com) → **New Project**
+2. Note your **Project Reference** and **Region**
+3. Go to **Database → Extensions** → ensure **`vector`** is enabled
+4. Go to **Settings → Database** → copy the **Session pooler** connection string
 
+### 3. Initialise Database Schema
+1. Open your Supabase project → **SQL Editor** → New query
+2. Paste the contents of `scripts/init_db.sql`
+3. Click **Run**
+
+### 4. Configure Environment
+Create a `.env` file in the project root (see `.env.example`):
+
+```ini
+GEMINI_API_KEY=your_gemini_api_key_here
+DATABASE_URL=postgresql+psycopg://postgres.[ref]:[password]@aws-0-[region].pooler.supabase.com:6543/postgres
+EMBEDDING_MODEL=gemini-embedding-2
+EMBEDDING_DIM=768
+LLM_MODEL=gemini-2.0-flash
+BACKEND_URL=http://127.0.0.1:8000
+```
+
+### 5. Install Dependencies
 ```bash
-# Create virtual environment
 python -m venv .venv
-
-# Activate virtual environment
-# On Windows (PowerShell):
-.venv\Scripts\Activate.ps1
-# On macOS/Linux:
-source .venv/bin/activate
-
-# Install required packages
+.venv\Scripts\Activate.ps1        # Windows
+# or: source .venv/bin/activate    # macOS/Linux
 pip install -r requirements.txt
 ```
 
-### 3. Configure API Key
-Create a `.env` file based on `.env.example` in the project root:
-
-```ini
-GEMINI_API_KEY="your-gemini-api-key-here"
+### 6. Seed Sample Data
+```bash
+python scripts/ingest.py
 ```
 
 ---
 
-## 💾 Core Workflows
+## Running
 
-### Step 1: Database Initialization & Seeding
-Populate the Chroma DB vector collection with standard OWASP documents and codes by running `ingest.py`:
-
+### Backend (FastAPI)
 ```bash
-python ingest.py
+uvicorn backend.main:app --host 127.0.0.1 --port 8000 --reload
 ```
-This initializes the vector store under `./chroma_data/` and seeds initial records utilizing Gemini Embeddings.
+- API docs: http://127.0.0.1:8000/docs
+- Health check: http://127.0.0.1:8000/health
 
-### Step 2: Start the FastAPI Backend
-Start the server using `uvicorn`:
-
+### Frontend (Streamlit)
+In a separate terminal:
 ```bash
-uvicorn main:app --host 127.0.0.1 --port 8000 --reload
+streamlit run frontend/app.py
 ```
-You can access the backend documentation at:
-- Swagger UI docs: http://127.0.0.1:8000/docs
-- Health status check: http://127.0.0.1:8000/health
-
-### Step 3: Launch Streamlit Web UI
-In a separate terminal workspace, load the reactive chatbot UI:
-
-```bash
-streamlit run app.py
-```
-The app will open automatically in your browser at `http://localhost:8501`.
+Opens at http://localhost:8501
 
 ---
 
-## 🎨 Interactive Controls & UI Design
+## API Endpoints
 
-- **Status Monitor**: The UI proactively pings `/health` to display whether the backend indexing system is online.
-- **Safety Overrides**: If the backend is dead/unavailable, UI queries are disabled to prevent crashing.
-- **Clear Conversation**: Destroys the active chat logs from the current session cache safely.
-- **Confidence Rating**: Visualizes the document distance matching score as a intuitive percentage statistic.
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/health` | Readiness probe (checks DB connection) |
+| POST | `/api/v1/search` | RAG search — embeds query, retrieves docs, synthesises answer |
+| GET | `/api/v1/conversations` | List recent conversations |
+| POST | `/api/v1/conversations` | Create a new conversation |
+| GET | `/api/v1/conversations/{id}` | Get conversation with full message history |
+| DELETE | `/api/v1/conversations/{id}` | Delete a conversation and its messages |

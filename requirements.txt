@@ -1,6 +1,10 @@
 fastapi
-uvicorn
-chromadb
+uvicorn[standard]
 google-genai
 python-dotenv
-langchain
+pydantic-settings
+sqlalchemy>=2.0
+pgvector
+psycopg[binary]
+streamlit
+requests
