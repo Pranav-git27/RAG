@@ -40,7 +40,7 @@ class Settings(BaseSettings):
     embedding_dim: int = 768
 
     # -- Generation --
-    llm_model: str = "gemini-2.0-flash"
+    llm_model: str = "gemini-2.5-flash"
 
     # -- Frontend convenience (Streamlit reads this) --
     backend_url: str = "http://127.0.0.1:8000"
